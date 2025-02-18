@@ -50,7 +50,7 @@ def parse_logs(log_dir, log_files, model_tag):
             actions_preds = [step['actions_pred'] for step in data['steps']]
             actions = [step['labels'] for step in data['steps']]
             timestamps_each_step = [float(step['timestamps_each_step']) for step in data['steps']]
-            mean_timestamps_each_step.append(np.mean(timestamps_each_step))
+            mean_timestamps_each_step.append(np.median(timestamps_each_step))
 
             # Losses
             mean_losses.append(np.mean(losses))
@@ -83,7 +83,10 @@ def parse_logs(log_dir, log_files, model_tag):
 
     print("log_dir",log_dir)
     
-    print("mean_timestamps_each_step",np.mean(mean_timestamps_each_step))
+    print("mean_timestamps_each_step",np.median(mean_timestamps_each_step))
+    print()
+    print("--"*20)
+    print()
    
     return pd.DataFrame({
         'Epoch': epoch_numbers,
